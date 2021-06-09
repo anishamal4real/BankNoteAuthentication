@@ -16,14 +16,22 @@ def predict_note():
     entropy= request.args.get('entropy')
     prediction= classifier.predict([[variance, skewness, curtosis, entropy]])
     return "The predicted value is" + str(prediction)
+    if __name__=='__main__':
+        app.run()
+    
+if __name__=='__main__':
+    app.run()
 
-'''
-@app.route('/predict_file/', methods=["POST"])
+
+
+
+@app.route('/predict_file',methods=["POST","GET"])
 def predict_note_file():
-    df_test=pd.read_csv("Test.csv")
+    df_test=pd.read_csv(request.files.get("file"))
     print(df_test.head())
-    prediction=classifier.predict(df_test) 
+    prediction=classifier.predict(df_test)
+    
     return str(list(prediction))
-'''
+
 if __name__=='__main__':
     app.run()
