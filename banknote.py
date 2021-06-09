@@ -8,6 +8,22 @@ classifier=pickle.load(pickle_in)
 @app.route('/')
 def welcome():
     return "Welcome All"
+@app.route('/predict/')
+def predict_note():
+    variance= request.args.get('variance')
+    skewness= request.args.get('skewness')
+    curtosis= request.args.get('curtosis')
+    entropy= request.args.get('entropy')
+    prediction= classifier.predict([[variance, skewness, curtosis, entropy]])
+    return "The predicted value is" + str(prediction)
 
+'''
+@app.route('/predict_file/', methods=["POST"])
+def predict_note_file():
+    df_test=pd.read_csv("Test.csv")
+    print(df_test.head())
+    prediction=classifier.predict(df_test) 
+    return str(list(prediction))
+'''
 if __name__=='__main__':
     app.run()
